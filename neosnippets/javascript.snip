@@ -1,74 +1,44 @@
-snippet :f
-options head
-  ${1:#:method_name}: function(${2:#:attribute}) {
-    ${0:TARGET}
-  }
+snippet c
+	function ${1}(){
+	};
+	
+	$1.prototype = {
+	}
 
-snippet function
-abbr    func
-options word
-  function ${1:#:function_name}(${2:#:argument}) {
-    ${0:TARGET}
-  }
-
-snippet function2
-abbr    func2
-options head
-  function ${1:function_name}(${2:argument}) {
-    ${0:TARGET}
-  }
-
-snippet proto
-options head
-  ${1:#:class_name}.prototype.${2:#:method_name} = function(${3:#:first_argument}) {
-    ${0:TARGET}
-  };
-
+snippet a
+	set${1} : function(${2}){
+		this.$2 = $2;
+		return this;
+	},
+	get$1 : function(){
+		return this.$2;
+	},
 
 snippet f
-options word
-  function(${1}) { ${0:TARGET} };
+	${1} : function(){
+		return this;
+	},
 
-snippet if
-options head
-  if (${1:true}) {
-    ${0:TARGET}
-  }
+snippet l
+	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
+		var row = $1[i];
+	}
 
-snippet if-else
-abbr ife
-options head
-  if (${1:#:condition}) {
-    ${0:TARGET}
-  } else {
-  }
+snippet click
+	$("${1}").click(function(){
+		
+	});
 
-snippet for
-options head
-  for (var ${1:i}=0; $1 < ${2:#:Things}.length; ++$1) {
-    ${0:TARGET}
-  }
+snippet c
+	var ${1} = (function () {
+		function $1(){
+		}
+		
+		$1.prototype = {
+			init : function() {
+			}
+		}
+		return $1;
+	})()
 
-snippet forin
-options head
-  for (var ${1:i} in ${2:#:Things}) {
-    ${0:TARGET}
-  }
 
-snippet key-value
-abbr :,
-options word
-  ${1:#:value_name}: ${0:#:value},
-
-#snippet key
-#options word
-#  ${1:#:key}: "${2:#:value}"}${3:, }
-
-snippet setTimeout-function
-options head
-  setTimeout(function() { ${0} }, ${1:10});
-
-snippet console-log
-alias cl
-options head
-  console.log(${0:TARGET});

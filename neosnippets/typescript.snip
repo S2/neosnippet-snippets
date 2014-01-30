@@ -1,0 +1,40 @@
+snippet c
+	/// <reference path="jquery.d.ts" />
+	
+	interface ${1}Option{
+	}
+	
+	var selfClass: $1;
+	class $1{
+		options:$1Option;
+		constructor(options:$1Option){
+			this.options = options;
+		
+			selfClass = this;
+		}
+		
+		private FUNCTIONNAME(){
+	}
+
+snippet pr
+		private ${1}(){
+	}
+
+snippet pu
+	/**
+		<br>
+		
+		@method ${1} 
+		@param {} 
+		@return ${2}
+	*/
+		public $1():$2{
+	}
+
+snippet l
+	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
+		var row = $1[i];
+	}
+
+
+    
