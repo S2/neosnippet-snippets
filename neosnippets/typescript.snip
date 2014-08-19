@@ -78,3 +78,27 @@ snippet in
 		clearInterval(intervalId)
 	} , 1000)
 
+snippet el
+	${1} : HTML${3}Element = <HTML$3Element>document.getElementById("${2}")
+
+snippet ac
+	private _${1} : ${2}
+	
+	get $1() : $2{
+		return this._$1
+	}
+	
+	set $1($1 : $2){
+		this._$1 = $1
+	}
+
+
+snippet xhr
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET" , url , false)
+	xhr.send()
+	xhr.addEventListener("readystatechange" , ()=>{
+		if (xhr.readyState === 4 && xhr.status === 200){
+			var result = JSON.parse(xhr.responseText);
+		}
+	});

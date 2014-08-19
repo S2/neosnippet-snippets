@@ -318,3 +318,34 @@ snippet class
 snippet dao
 	my $dao = $c->dao('default');
 
+snippet fork
+	my $pid = fork;
+	if ($pid) {
+		# parent
+	} else {
+		# child
+	}
+
+snippet mo
+	package ${1}::Model::${2}{
+		use strict;
+		use warnings;
+		use utf8;
+		
+		my $table_name = '${3}';
+		
+		sub insert{
+			my ($self , $values)  = @_;
+			my $dao = $self->dao('default');
+			return $dao->insert($table_name , $values)->id;
+		}
+		
+		sub update{
+			my ($self , $id , $values)  = @_;
+			my $dao = $self->dao('default');
+			$dao->update($table_name , $values , {id => $id });
+		}
+	
+	}
+	
+	1;
