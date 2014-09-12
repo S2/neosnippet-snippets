@@ -2,8 +2,20 @@ snippet c
 	/// <reference path="jquery.d.ts" />
 	
 	module ${1}{
-		class ${2}{
+		class ${2} : ${3}{
+			/**
+			 * <br>
+			 *
+			 * @class $1.$2
+			 * @extends $3
+			 * @constructor 
+			 * @param {} 
+			 */
 			constructor(){
+			}
+			
+			private getCsrfToken() : string {
+				return (<HTMLInputElement>document.getElementsByClassName("csrf_token")[0]).value
 			}
 		}
 	}
@@ -94,11 +106,60 @@ snippet ac
 
 
 snippet xhr
+	var url = ""
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET" , url , false)
-	xhr.send()
+	xhr.open("POST" , url , true)
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	var json = this.getJSON();
+	var token = this.getCsrfToken();
 	xhr.addEventListener("readystatechange" , ()=>{
 		if (xhr.readyState === 4 && xhr.status === 200){
 			var result = JSON.parse(xhr.responseText);
 		}
 	});
+	xhr.send('json=' + json + "&csrf_token=" + token);
+
+snippet enum
+	enum ${1} {
+		${2} ,
+	}
+
+snippet table
+	var table = document.createElement("table")
+	var trHead = document.createElement("tr")
+	
+	var thId = document.createElement("th")
+	thId.innerHTML = "ID"
+	
+	var thName = document.createElement("th")
+	thName.innerHTML = "名前"
+	
+	var thButton = document.createElement("th")
+	thButton.innerHTML = "削除"
+	
+	trHead.appendChild(tdId)
+	trHead.appendChild(tdName)
+	trHead.appendChild(tdButton)
+	
+	table.appendChild(trHead)
+	
+	for( var i = 0 , arrayLength = {$1}.length ; i < arrayLength ; i++){
+		(()=>{
+			var row = $1[i];
+	
+			var tr = document.createElement("tr")
+			var tdId = document.createElement("td")
+			tdId.innerHTML = String(row.id)
+	
+			var tdName = document.createElement("td")
+			tdName.innerHTML = row.name
+	
+			var tdButton = document.createElement("td")
+			var button = document.createElement("button")
+			button.type = "button"
+			button.innerHTML = "削除"
+			button.addEventListener("click" , (e : Event)=>{
+	
+			})
+		})
+	)
