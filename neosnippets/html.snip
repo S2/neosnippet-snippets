@@ -455,23 +455,10 @@ snippet select
 		},
 	] %]
 
-snippet click
-	$("${1}").click(function(){
-		
-	});
-
 snippet f
 	${1} : function(){
 		return this;
 	},
-
-snippet l
-	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
-		var row = $1[i];
-	}
-
-snippet ae
-	${1}.addEventListener("click" , function(e){})
 
 snippet ti
 	setTimeout(function(){
@@ -483,4 +470,18 @@ snippet in
 		
 		clearInterval(intervalId)
 	} , 1000)
+
+snippet l
+	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
+		var row = $1[i];
+	}
+
+snippet ge
+	var ${1} = document.getElementById("${2}")
+
+snippet cr
+	var ${1} = document.createElement("${2}")
+
+snippet ae
+	${1}.addEventListener("click" , (e : Event)=>{})
 

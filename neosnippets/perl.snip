@@ -331,6 +331,7 @@ snippet mo
 		use strict;
 		use warnings;
 		use utf8;
+		use parent qw(Wanon2::Model);
 		
 		my $table_name = '${3}';
 		
@@ -349,3 +350,26 @@ snippet mo
 	}
 	
 	1;
+
+snippet w
+	package ${1}::Web::Dispatcher::${2}::${3}{
+		use strict;
+		use warnings;
+		
+		our $PATH_PREFIX = '/';
+		use Wanon2::Web::Dispatcher::Proxy -from => '$1::Web::Dispatcher::$2';
+		use JSON::XS qw/decode_json encode_json/;
+		use Encode qw/encode/;
+	}
+
+	1;
+
+snippet ra
+	use String::Random qw(random_regex random_string);
+	my $random_string = random_regex("[a-zA-Z]{10}");
+
+snippet l
+	for my $$1(@$${1}s){
+		${2}
+	}
+

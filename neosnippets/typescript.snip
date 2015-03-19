@@ -2,7 +2,7 @@ snippet c
 	/// <reference path="jquery.d.ts" />
 	
 	module ${1}{
-		class ${2} : ${3}{
+		export class ${2} extends ${3}{
 			/**
 			 * <br>
 			 *
@@ -65,6 +65,19 @@ snippet pu
 	public $1():$2{
 	}
 
+snippet pt
+	/**
+		<br>
+		
+		@method ${1} 
+		@param {} 
+		@return ${2}
+	*/
+	protected $1():$2{
+	}
+
+
+
 snippet l
 	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
 		var row = $1[i];
@@ -124,42 +137,56 @@ snippet enum
 		${2} ,
 	}
 
+snippet ap
+	${1}.appendChild(${2})
+
 snippet table
 	var table = document.createElement("table")
 	var trHead = document.createElement("tr")
-	
+
 	var thId = document.createElement("th")
 	thId.innerHTML = "ID"
-	
+
 	var thName = document.createElement("th")
 	thName.innerHTML = "名前"
-	
+
 	var thButton = document.createElement("th")
 	thButton.innerHTML = "削除"
-	
+
 	trHead.appendChild(tdId)
 	trHead.appendChild(tdName)
 	trHead.appendChild(tdButton)
-	
+
 	table.appendChild(trHead)
-	
+
 	for( var i = 0 , arrayLength = {$1}.length ; i < arrayLength ; i++){
 		(()=>{
 			var row = $1[i];
-	
+
 			var tr = document.createElement("tr")
 			var tdId = document.createElement("td")
 			tdId.innerHTML = String(row.id)
-	
+
 			var tdName = document.createElement("td")
 			tdName.innerHTML = row.name
-	
+
 			var tdButton = document.createElement("td")
 			var button = document.createElement("button")
 			button.type = "button"
 			button.innerHTML = "削除"
 			button.addEventListener("click" , (e : Event)=>{
-	
+
+			tdButton.appendChild(button)
+
+			tr.appendChild(trId)
+			tr.appendChild(trName)
+			tr.appendChild(trButton)
+
+			table.appendChild(tr)
 			})
 		})
 	)
+
+snippet r
+	/// <reference path="${1}" />
+
