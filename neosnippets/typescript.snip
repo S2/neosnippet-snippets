@@ -1,5 +1,4 @@
 snippet c
-	/// <reference path="jquery.d.ts" />
 	
 	module ${1}{
 		export class ${2} extends ${3}{
@@ -123,7 +122,7 @@ snippet xhr
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST" , url , true)
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	var json = this.getJSON();
+	var json = encodeURIComponent(this.getJSON());
 	var token = this.getCsrfToken();
 	xhr.addEventListener("readystatechange" , ()=>{
 		if (xhr.readyState === 4 && xhr.status === 200){

@@ -118,133 +118,176 @@ snippet now
 	localtime(time)->strftime('%Y-%m-%d %H:%M:%S')
 
 snippet create
-	our %CAPTURE_REPLACE = (
-		id => '\d+',
-	);
-
-	my %create_columns = qw//;
-	my %modify_columns = qw//;
-
-	my @create_columns = qw//;
-	my @modify_columns = qw//;
-
-	my $create_start_url = $PATH_PREFIX . '/create/';
-	my $modify_start_url = $PATH_PREFIX . '/modify/%s/';
-
-	any '/enable/:id' => sub{
-		my ($c,$args,$p) = @_;
-		my $id = $args->{id};
-		my $row = $c->dao('default')->single('${1}' , {id => $id});
-		$row->is_enabled ? 
-			$c->dao('default')->update('$1' , {is_enabled => 0 } , {id => $id}) : 
-			$c->dao('default')->update('$1' , {is_enabled => 1 } , {id => $id});
-		return $c->redirect($PATH_PREFIX . '/list');
-	};
-
-	any '/list' => sub{
-		my ($c,$args,$p) = @_;
-		my $id = $args->{id};
-		my $row = $c->dao('slave_db')->search('$1')->all;
-		$c->view_param(list => [map{$_->get_columns}@$row]);
-	};
-
-	any '/delete/:id' => sub{
-		my ($c,$args,$p) = @_;
-		my $id = $args->{id};
-		my $row = $c->dao('default')->delete('$1' ,{id => $id});
-		return $c->redirect($PATH_PREFIX . '/list');
-	};
-
-	any '/create/' => sub{
-		my ($c,$args,$p) = @_;
+	package Kuroneco::Web::Dispatcher::${1}{
+		use strict;
+		use warnings;
+		use utf8;
+		
+		use Wanon2::Web::Dispatcher::Proxy -from => 'Kuroneco::Web::Dispatcher';
+		
+		our %CAPTURE_REPLACE = (
+			id => '\d+',
+		);
 	
-		$c->view_param($p->as_hashref);
-		map{
-			if(defined $c->session->get($_)){
-				$c->view_param($_, $c->session->get($_));
+		our $PATH_PREFIX = "/";
+		my %create_columns = qw//;
+		my %modify_columns = qw//;
+	
+		my @create_columns = qw//;
+		my @modify_columns = qw//;
+	
+		my $create_start_url = $PATH_PREFIX . '/create/';
+		my $modify_start_url = $PATH_PREFIX . '/modify/%s/';
+	
+		my $select_button_columns = {
+			key_name => ["する" , "しない"] , 
+		};
+	
+		my $table_name = "${2}";
+		my $model_name = "${3}";
+	
+		any '/enable/:id' => sub{
+			my ($c,$args,$p) = @_;
+			my $id = $args->{id};
+			my $row = $c->dao('default')->single($table_name , {id => $id});
+			$row->is_enabled ? 
+				$c->dao('default')->update($table_name , {is_enabled => 0 } , {id => $id}) : 
+				$c->dao('default')->update($table_name , {is_enabled => 1 } , {id => $id});
+			return $c->redirect($PATH_PREFIX . '/list');
+		};
+	
+		my @like_columns = qw/name identifier/;
+	
+		any '/list' => sub{
+			my ($c,$args,$p) = @_;
+			$c->view_param($p->as_hashref);
+			my $id = $args->{id};
+			for(@like_columns){
+				if($p->{$_} && length $p->{$_} > 0){
+					$p->{$_} = {LIKE => '%' . $p->{$_} . '%'};
+				}else{
+					delete $p->{$_};
+				}
+			}
+	
+			delete $p->{csrf_token};
+			my $row = $c->dao('slave_db')->search($table_name , $p)->all;
+			$c->view_param(list => [map{$_->get_columns}@$row]);
+		};
+	
+		any '/delete/:id' => sub{
+			my ($c,$args,$p) = @_;
+			my $id = $args->{id};
+			my $row = $c->dao('default')->delete($table_name ,{id => $id});
+			return $c->redirect("$PATH_PREFIX/list");
+		};
+	
+		any '/create/' => sub{
+			my ($c,$args,$p) = @_;
+		
+			for(keys %$select_button_columns){
+				$c->session->set($_ => 0)
+			}
+			$c->view_param($p->as_hashref);
+			map{
+				if(defined $c->session->get($_)){
+					$c->view_param($_, $c->session->get($_));
+					$c->session->remove($_);
+				}
+				if($c->session->get("error_$_")){
+					$c->view_param("error_$_", $c->session->get("error_$_"));
+					$c->session->remove("error_$_");
+				}
+			}@create_columns;
+		};
+		
+		any '/create/confirm' => sub{
+			my ($c,$args,$p) = @_;
+			
+			$p->each(sub {$c->session->set($_[0] ,$_[1]);});
+			
+			if($c->has_error){
+				while(my ($key , $value) = each(%{$c->{error_message}})){
+					$c->session->set($key ,$value);
+				}
+				return $c->redirect($create_start_url);
+			}
+
+			for(keys %$select_button_columns){
+				my $value = $select_button_columns->{$_};
+				$p->{$_} = $p->{$_} ? $value->[0] : $value->[1];
+			}
+			$c->view_param(p => $p->as_hashref);
+			$c->view_param(column_names => \%create_columns);
+			$c->view_param(columns => \@create_columns);
+		};
+		
+		any '/create/done' => sub{
+			my ($c,$args,$p) = @_;
+			
+			my $values = {};
+			map{
+				$values->{$_} = $c->session->get($_);
 				$c->session->remove($_);
-			}
-			if($c->session->get("error_$_")){
-				$c->view_param("error_$_", $c->session->get("error_$_"));
-				$c->session->remove("error_$_");
-			}
-		}@create_columns;
-	};
+			}@create_columns;
+			$c->model($model_name)->insert($values);
+			return $c->redirect("$PATH_PREFIX/list");
+		};
 	
-	any '/create/confirm' => sub{
-		my ($c,$args,$p) = @_;
+		any '/modify/:id/' => sub{
+			my ($c,$args,$p) = @_;
+			my $id = $args->{id};
 		
-		$p->each(sub {$c->session->set($_[0] ,$_[1]);});
+			my $row = $c->dao('slave_db')->single($table_name , {id => $id});
+			$c->view_param($row->get_columns);
+			$c->view_param($p->as_hashref);
+			map{
+				if(defined $c->session->get($_)){
+					$c->view_param($_, $c->session->get($_));
+					$c->session->remove($_);
+				}
+				if(defined $c->session->get("error_$_")){
+					$c->view_param("error_$_", $c->session->get("error_$_"));
+					$c->session->remove("error_$_");
+				}
+			}@modify_columns;
+		};
 		
-		if($c->has_error){
-			while(my ($key , $value) = each(%{$c->{error_message}})){
-				$c->session->set($key ,$value);
+		any '/modify/:id/confirm' => sub{
+			my ($c,$args,$p) = @_;
+			my $id = $args->{id};
+			
+			$p->each(sub {$c->session->set($_[0] ,$_[1]);});
+			
+			if($c->has_error){
+				while(my ($key , $value) = each(%{$c->{error_message}})){
+					$c->session->set($key ,$value);
+				}
+				return $c->redirect(sprintf($modify_start_url , $id));
 			}
-			return $c->redirect($create_start_url);
-		}
-		$c->view_param(p => $p->as_hashref);
-		$c->view_param(column_names => \%create_columns);
-		$c->view_param(columns => \@create_columns);
-	};
-	
-	any '/create/done' => sub{
-		my ($c,$args,$p) = @_;
+			for(keys %$select_button_columns){
+				my $value = $select_button_columns->{$_};
+				$p->{$_} = $p->{$_} ? $value->[0] : $value->[1];
+			}
+			$c->view_param(p => $p->as_hashref);
+			$c->view_param(column_names => \%create_columns);
+			$c->view_param(columns => \@create_columns);
+		};
 		
-		my $values = {};
-		map{
-			$values->{$_} = $c->session->get($_);
-			$c->session->remove($_);
-		}@create_columns;
-		$c->model('${2}')->insert($values);
-	};
-
-	any '/modify/:id/' => sub{
-		my ($c,$args,$p) = @_;
-		my $id = $args->{id};
-	
-		my $row = $c->dao('slave_db')->single('$1' , {id => $id});
-		$c->view_param($row->get_columns);
-		$c->view_param($p->as_hashref);
-		map{
-			if(defined $c->session->get($_)){
-				$c->view_param($_, $c->session->get($_));
+		any '/modify/:id/done' => sub{
+			my ($c,$args,$p) = @_;
+			my $id = $args->{id};
+			
+			my $values = {};
+			map{
+				$values->{$_} = $c->session->get($_);
 				$c->session->remove($_);
-			}
-			if(defined $c->session->get("error_$_")){
-				$c->view_param("error_$_", $c->session->get("error_$_"));
-				$c->session->remove("error_$_");
-			}
-		}@modify_columns;
+			}@modify_columns;
+			$c->model($model_name)->update( $id , $values );
+			return $c->redirect("$PATH_PREFIX/list");
+		};
 	};
-	
-	any '/modify/:id/confirm' => sub{
-		my ($c,$args,$p) = @_;
-		my $id = $args->{id};
-		
-		$p->each(sub {$c->session->set($_[0] ,$_[1]);});
-		
-		if($c->has_error){
-			while(my ($key , $value) = each(%{$c->{error_message}})){
-				$c->session->set($key ,$value);
-			}
-			return $c->redirect(sprintf($modify_start_url , $id));
-		}
-		$c->view_param(p => $p->as_hashref);
-		$c->view_param(column_names => \%create_columns);
-		$c->view_param(columns => \@create_columns);
-	};
-	
-	any '/modify/:id/done' => sub{
-		my ($c,$args,$p) = @_;
-		my $id = $args->{id};
-		
-		my $values = {};
-		map{
-			$values->{$_} = $c->session->get($_);
-			$c->session->remove($_);
-		}@modify_columns;
-		$c->model('$2')->update($values, {id => $id});
-	};
+	1;
 
 snippet csvsql
 	#!/usr/bin/env perl
@@ -299,21 +342,6 @@ snippet master
 	$c->view_param($1_list => [map{$_->get_columns}@$$1]);
 	my $$1_list = [map{$_->get_columns}@$$1];
 	my $$1_hash = {map{$_->{id} => $_}@$$1_list};
-
-snippet class
-	package Hoge;
-	use 5.16.2;
-	use strict;
-	use warnings;
-	use utf8;
-	sub new {
-		my $class = shift;
-		my $args = ref $_[0] ? $_[0] : +{@_};
-		
-		bless $args, $class;
-	}
-	
-	1;
 
 snippet dao
 	my $dao = $c->dao('default');
@@ -373,3 +401,19 @@ snippet l
 		${2}
 	}
 
+snippet c
+	package Hoge{
+		use 5.18.0;
+		use strict;
+		use warnings;
+		use utf8;
+	
+		sub new {
+			my $class = shift;
+			my $args = ref $_[0] ? $_[0] : +{@_};
+	
+			bless $args, $class;
+		}
+	}
+	
+	1;
