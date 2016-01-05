@@ -30,3 +30,55 @@ snippet     warn
 options     head
   (binding [*out* *err*]
     (println ${0:TARGET}))
+
+snippet fn
+	(defn ${1} [${2}])
+
+snippet l
+	(let [
+		${1} ${2} ,
+	] ${3})
+
+snippet f
+	
+	(loop [i 0]
+		(when (< i ${1})
+			${2}
+			(recur (inc i))
+		)
+	)
+
+snippet i
+	(if (${1})
+		${2}
+		${3}
+	)
+
+snippet in
+	(insert media_user_segment_parameter
+		(values[
+				${1}
+			]
+		)
+	)
+
+snippet de
+	${1} (delete ${2}
+		(where (and (= :${4} ${5}))))
+
+snippet se
+	${1} (select ${2}
+		(fields :${3})
+		(where (and (= :${4} ${5}))))
+
+snippet si
+	${1} (select ${2}
+		(fields :${3})
+		(where (and (= :${4} ${5})))
+		(limit 1))
+
+snippet up
+	(update ${1}
+		(set-fields {:${2} ${3}})
+		(where {:${4} ${5}})
+	)
