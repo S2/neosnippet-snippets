@@ -45,3 +45,10 @@ snippet in
 		clearInterval(intervalId)
 	} , 1000)
 
+snippet create
+	setTimeout(function(){
+		page.evaluate(function() {
+			document.querySelector('form[action="/ac_admin/${1}/create/"]').submit();
+		});
+		page.render('capture/$1_list.png');
+	} , 1000)

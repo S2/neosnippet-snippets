@@ -78,15 +78,15 @@ snippet pt
 
 
 snippet l
-	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
-		var row = $1[i];
+	for( let i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
+		let row = $1[i];
 	}
 
 snippet ge
-	var ${1} = document.getElementById("${2}")
+	let ${1} = document.getElementById("${2}")
 
 snippet cr
-	var ${1} = document.createElement("${2}")
+	let ${1} = document.createElement("${2}")
 
 snippet ae
 	${1}.addEventListener("click" , (e : Event)=>{})
@@ -97,7 +97,7 @@ snippet ti
 	} , 1000)
 
 snippet in
-	var intervalId = setInterval(()=>{
+	let intervalId = setInterval(()=>{
 		
 		clearInterval(intervalId)
 	} , 1000)
@@ -118,15 +118,15 @@ snippet ac
 
 
 snippet xhr
-	var url = ""
-	var xhr = new XMLHttpRequest();
+	let url = ""
+	let xhr = new XMLHttpRequest();
 	xhr.open("POST" , url , true)
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	var json = encodeURIComponent(this.getJSON());
-	var token = this.getCsrfToken();
+	let json = encodeURIComponent(this.getJSON());
+	let token = this.getCsrfToken();
 	xhr.addEventListener("readystatechange" , ()=>{
 		if (xhr.readyState === 4 && xhr.status === 200){
-			var result = JSON.parse(xhr.responseText);
+			let result = JSON.parse(xhr.responseText);
 		}
 	});
 	xhr.send('json=' + json + "&csrf_token=" + token);
@@ -140,16 +140,16 @@ snippet ap
 	${1}.appendChild(${2})
 
 snippet table
-	var table = document.createElement("table")
-	var trHead = document.createElement("tr")
+	let table = document.createElement("table")
+	let trHead = document.createElement("tr")
 
-	var thId = document.createElement("th")
+	let thId = document.createElement("th")
 	thId.innerHTML = "ID"
 
-	var thName = document.createElement("th")
+	let thName = document.createElement("th")
 	thName.innerHTML = "名前"
 
-	var thButton = document.createElement("th")
+	let thButton = document.createElement("th")
 	thButton.innerHTML = "削除"
 
 	trHead.appendChild(tdId)
@@ -158,19 +158,19 @@ snippet table
 
 	table.appendChild(trHead)
 
-	for( var i = 0 , arrayLength = {$1}.length ; i < arrayLength ; i++){
+	for( let i = 0 , arrayLength = {$1}.length ; i < arrayLength ; i++){
 		(()=>{
-			var row = $1[i];
+			let row = $1[i];
 
-			var tr = document.createElement("tr")
-			var tdId = document.createElement("td")
+			let tr = document.createElement("tr")
+			let tdId = document.createElement("td")
 			tdId.innerHTML = String(row.id)
 
-			var tdName = document.createElement("td")
+			let tdName = document.createElement("td")
 			tdName.innerHTML = row.name
 
-			var tdButton = document.createElement("td")
-			var button = document.createElement("button")
+			let tdButton = document.createElement("td")
+			let button = document.createElement("button")
 			button.type = "button"
 			button.innerHTML = "削除"
 			button.addEventListener("click" , (e : Event)=>{

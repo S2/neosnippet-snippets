@@ -1,3 +1,39 @@
+snippet u
+	#!mruby
+
+snippet dts
+	require "time";
+	seconds = Time.strptime(${1} , '%Y-%m-%d %H:%M:%S').strftime('%s')
+
+snippet sdt
+	require "time";
+	Time.now.strftime('%Y-%m-%d %H:%M:%S')
+
+snippet s
+	def ${1}() 
+		
+	end
+
+snippet def
+	def ${1}() 
+		
+	end
+
+snippet c
+	class ${1} < ${2}
+		
+		attr_accessor :agent 
+		
+		def initialize()
+			
+		end
+	end
+
+snippet l
+	${1}.each do |x| 
+		${2}
+	end
+
 snippet     if
 abbr        if ... end
   if ${1:#:condition}
