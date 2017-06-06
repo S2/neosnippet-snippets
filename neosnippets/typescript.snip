@@ -158,31 +158,30 @@ snippet table
 
 	table.appendChild(trHead)
 
-	for( let i = 0 , arrayLength = {$1}.length ; i < arrayLength ; i++){
-		(()=>{
-			let row = $1[i];
+	for( let i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
+		let row = $1[i];
 
-			let tr = document.createElement("tr")
-			let tdId = document.createElement("td")
-			tdId.innerHTML = String(row.id)
+		let tr = document.createElement("tr")
+		let tdId = document.createElement("td")
+		tdId.innerHTML = String(row.id)
 
-			let tdName = document.createElement("td")
-			tdName.innerHTML = row.name
+		let tdName = document.createElement("td")
+		tdName.innerHTML = row.name
 
-			let tdButton = document.createElement("td")
-			let button = document.createElement("button")
-			button.type = "button"
-			button.innerHTML = "削除"
-			button.addEventListener("click" , (e : Event)=>{
+		let tdButton = document.createElement("td")
+		let button = document.createElement("button")
+		button.type = "button"
+		button.innerHTML = "削除"
+		button.addEventListener("click" , (e : Event)=>{
+		})
 
-			tdButton.appendChild(button)
+		tdButton.appendChild(button)
 
-			tr.appendChild(trId)
-			tr.appendChild(trName)
-			tr.appendChild(trButton)
+		tr.appendChild(trId)
+		tr.appendChild(trName)
+		tr.appendChild(trButton)
 
-			table.appendChild(tr)
-			})
+		table.appendChild(tr)
 		})
 	)
 
