@@ -285,10 +285,10 @@ snippet pu
 	/**
 		<br>
 		
-		@method ${1} 
+		@method $1 
 		@param {} 
 	*/
-	public function $1(){
+	public function ${1}(){
 	}
 
 snippet pt
@@ -318,8 +318,17 @@ snippet c
 	<?php
 	/**
 	 */
-	$1;
+	namespace ${1};
 	
-	class $2 extends $3{ 
+	class ${2} extends ${3}{ 
 		
 	}
+
+snippet re
+	preg_match('/${1}/' , ${2})
+
+snippet i
+	if(${1}){
+		
+	}
+
