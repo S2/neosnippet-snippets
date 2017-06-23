@@ -274,3 +274,52 @@ snippet server
 snippet session
 	\$_SESSION['${1:#:variable}']
 
+snippet d
+	var_dump(${1});
+
+snippet pr
+	private function ${1}(){
+	}
+
+snippet pu
+	/**
+		<br>
+		
+		@method ${1} 
+		@param {} 
+	*/
+	public function $1(){
+	}
+
+snippet pt
+	/**
+		<br>
+		
+		@method ${1} 
+		@param {} 
+	*/
+	protected function $1(){
+	}
+
+snippet l
+	foreach(${1} as ${2}){
+		
+	}
+
+snippet u
+	<?php
+
+snippet i
+	interface ${1}{
+		${2} : ${3};
+	}
+
+snippet c
+	<?php
+	/**
+	 */
+	$1;
+	
+	class $2 extends $3{ 
+		
+	}
