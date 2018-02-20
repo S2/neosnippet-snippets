@@ -12,10 +12,6 @@ snippet c
 			 */
 			constructor(){
 			}
-			
-			private getCsrfToken() : string {
-				return (<HTMLInputElement>document.getElementsByClassName("csrf_token")[0]).value
-			}
 		}
 	}
 
@@ -24,9 +20,7 @@ snippet i
 		${2} : ${3};
 	}
 
-
 snippet p
-	this.${1} : $3 = $1;
 	/**
 		<br>
 		
@@ -75,12 +69,19 @@ snippet pt
 	protected $1():$2{
 	}
 
-
-
 snippet l
-	for( let i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
-		let row = $1[i];
+	${1}s.each(($1)=>{
+		${2}
 	}
+
+snippet m
+	${1}s.map(($1)=>{
+		${2}
+	}
+
+snippet g
+	${1}s.select(($1)=>{
+		${2}
 
 snippet ge
 	let ${1} = document.getElementById("${2}")
@@ -90,6 +91,32 @@ snippet cr
 
 snippet ae
 	${1}.addEventListener("click" , (e : Event)=>{})
+
+snippet e 
+	(ReactDom.findDOMNode(this.refs.${1}) as HTML${2}Element) 
+
+snippet re 
+	interface Props {
+		
+	}
+	
+	interface State {
+		
+	}
+	
+	class ${1} extends React.Component<Props , State> {
+		constructor(props : Props){
+			super(props)
+			this.state = {
+			}
+		}
+		
+		render() {
+			return (
+				${2}
+			);
+		}
+	}
 
 snippet ti
 	setTimeout(()=>{
@@ -116,77 +143,23 @@ snippet ac
 		this._$1 = $1
 	}
 
-
 snippet xhr
 	let url = ""
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST" , url , true)
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	let json = encodeURIComponent(this.getJSON());
-	let token = this.getCsrfToken();
 	xhr.addEventListener("readystatechange" , ()=>{
 		if (xhr.readyState === 4 && xhr.status === 200){
 			let result = JSON.parse(xhr.responseText);
 		}
 	});
-	xhr.send('json=' + json + "&csrf_token=" + token);
+	xhr.send('json=' + json);
 
 snippet enum
 	enum ${1} {
 		${2} ,
 	}
-
-snippet ap
-	${1}.appendChild(${2})
-
-snippet table
-	let table = document.createElement("table")
-	let trHead = document.createElement("tr")
-
-	let thId = document.createElement("th")
-	thId.innerHTML = "ID"
-
-	let thName = document.createElement("th")
-	thName.innerHTML = "名前"
-
-	let thButton = document.createElement("th")
-	thButton.innerHTML = "削除"
-
-	trHead.appendChild(tdId)
-	trHead.appendChild(tdName)
-	trHead.appendChild(tdButton)
-
-	table.appendChild(trHead)
-
-	for( let i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
-		let row = $1[i];
-
-		let tr = document.createElement("tr")
-		let tdId = document.createElement("td")
-		tdId.innerHTML = String(row.id)
-
-		let tdName = document.createElement("td")
-		tdName.innerHTML = row.name
-
-		let tdButton = document.createElement("td")
-		let button = document.createElement("button")
-		button.type = "button"
-		button.innerHTML = "削除"
-		button.addEventListener("click" , (e : Event)=>{
-		})
-
-		tdButton.appendChild(button)
-
-		tr.appendChild(trId)
-		tr.appendChild(trName)
-		tr.appendChild(trButton)
-
-		table.appendChild(tr)
-		})
-	)
-
-snippet r
-	/// <reference path="${1}" />
 
 snippet d
 	console.log(${1})
