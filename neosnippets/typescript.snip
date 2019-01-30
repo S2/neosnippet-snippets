@@ -1,46 +1,20 @@
 snippet c
-	
-	module ${1}{
-		export class ${2} extends ${3}{
-			/**
-			 * <br>
-			 *
-			 * @class $1.$2
-			 * @extends $3
-			 * @constructor 
-			 * @param {} 
-			 */
-			constructor(){
-			}
+	export default class extends ${3}{
+		/**
+		 * <br>
+		 *
+		 * @class $1.$2
+		 * @extends $3
+		 * @constructor 
+		 * @param {} 
+		 */
+		constructor(){
 		}
 	}
 
 snippet i
 	interface ${1}{
 		${2} : ${3};
-	}
-
-snippet p
-	/**
-		<br>
-		
-		@method set${2} 
-		@param {${3}} 
-		@return void 
-	*/
-	public set$2():void{
-		this.$1 = $1;
-	}
-	
-	/**
-		<br>
-		
-		@method get$2 
-		@param {} 
-		@return $3
-	*/
-	public get$2():$3{
-		return this.$1
 	}
 
 snippet pr
@@ -70,18 +44,19 @@ snippet pt
 	}
 
 snippet l
-	${1}s.each(($1)=>{
+	${1}s.forEach(($1)=>{
 		${2}
-	}
+	})
 
 snippet m
 	${1}s.map(($1)=>{
 		${2}
-	}
+	})
 
 snippet g
-	${1}s.select(($1)=>{
+	${1}s.filter(($1)=>{
 		${2}
+	})
 
 snippet ge
 	let ${1} = document.getElementById("${2}")
@@ -132,17 +107,6 @@ snippet in
 snippet el
 	${1} : HTML${3}Element = <HTML$3Element>document.getElementById("${2}")
 
-snippet ac
-	private _${1} : ${2}
-	
-	get $1() : $2{
-		return this._$1
-	}
-	
-	set $1($1 : $2){
-		this._$1 = $1
-	}
-
 snippet xhr
 	let url = ""
 	let xhr = new XMLHttpRequest();
@@ -164,3 +128,19 @@ snippet enum
 snippet d
 	console.log(${1})
 
+snippet f
+	(ReactDom.findDOMNode(this.refs.${1}) as HTMLInputElement).value
+
+snippet fc
+	import * as React from 'react'
+	import * as ReactDom from 'react-dom'
+	import "./${1}.sass"
+	
+	interface Props {
+		
+	}
+	
+	export default function (props : Props){
+		return <${2}>{props.children}</$2>
+	}
+	

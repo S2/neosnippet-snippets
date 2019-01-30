@@ -60,3 +60,22 @@ snippet read
 		fh.puts(${2})
 	end
 
+snippet t
+	create_table :${1}s  , :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
+		t.references :${2} , null: false , cascade: true , foreign_key: {on_delete: :cascade} , index:{name: "$1s1" } 
+		t.integer :${3} , null: false
+	end
+
+snippet v
+	ActiveRecord::Base.connection.execute('
+		CREATE VIEW \`${1}\` AS
+			SELECT
+				${2}.*,
+			FROM 
+				${3}
+	')
+
+snippet j
+	INNER JOIN 
+		${1}s ON $1s.id = ${2}.$1_id
+
