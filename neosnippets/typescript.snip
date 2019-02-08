@@ -144,3 +144,19 @@ snippet fc
 		return <${2}>{props.children}</$2>
 	}
 	
+
+snippet gr
+	import {MultipleQuery} from "./Model/GraphQL";
+	import {${1}}      from "./Model/GraphQL/Queries";
+
+snippet gc
+	new MultipleQuery((e) => {
+		} , new ${1}(
+			{} ,
+			["all"],
+			(${2}) => {
+				this.setState({$2})
+			}
+		)
+	)
+
