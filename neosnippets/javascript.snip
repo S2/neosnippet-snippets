@@ -1,38 +1,145 @@
-snippet a
-	set${1} : function(${2}){
-		this.$2 = $2;
-		return this;
-	},
-	get$1 : function(){
-		return this.$2;
-	},
-
-snippet f
-	${1} : function(){
-		return this;
-	},
-
-snippet l
-	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
-		var row = $1[i];
+snippet c
+	export default class extends ${3}{
+		/**
+		 * <br>
+		 *
+		 * @class $1.$2
+		 * @extends $3
+		 * @constructor 
+		 * @param {} 
+		 */
+		constructor(){
+		}
 	}
 
-snippet click
-	$("${1}").click(function(){
+snippet pu
+	/**
+		<br>
 		
-	});
+		@method ${1} 
+		@param {} 
+	*/
+	$1(){
+	}
 
-snippet c
-	var ${1} = (function () {
-		function $1(){
-		}
+snippet l
+	${1}s.forEach(($1)=>{
+		${2}
+	})
+
+snippet m
+	${1}s.map(($1)=>{
+		${2}
+	})
+
+snippet g
+	${1}s.filter(($1)=>{
+		${2}
+	})
+
+snippet ge
+	const ${1} = document.getElementById("${2}")
+
+snippet cr
+	const ${1} = document.createElement("${2}")
+
+snippet ae
+	${1}.addEventListener("click" , (e)=>{})
+
+snippet e 
+	(ReactDom.findDOMNode(this.refs.${1}) as HTML${2}Element) 
+
+snippet re 
+	import * as React from 'react'
+	import * as ReactDom from 'react-dom'
+	import "./${1}.sass"
+	
+	interface Props {
 		
-		$1.prototype = {
-			init : function() {
+	}
+	
+	interface State {
+		
+	}
+	
+	export default class extends React.Component<Props , State> {
+		constructor(props){
+			super(props)
+			this.state = {
 			}
 		}
-		return $1;
-	})()
+		
+		render() {
+			return ${2}
+		}
+	}
+
+snippet ti
+	setTimeout(()=>{
+		
+	} , 1000)
+
+snippet in
+	const intervalId = setInterval(()=>{
+		
+		clearInterval(intervalId)
+	} , 1000)
+
+snippet el
+	${1} = <HTML$3Element>document.getElementById("${2}")
+
+snippet xhr
+	const url = ""
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST" , url , true)
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	const json = encodeURIComponent(this.getJSON());
+	xhr.addEventListener("readystatechange" , ()=>{
+		if (xhr.readyState === 4 && xhr.status === 200){
+			const result = JSON.parse(xhr.responseText);
+		}
+	});
+	xhr.send('json=' + json);
+
+snippet enum
+	enum ${1} {
+		${2} ,
+	}
+
+snippet d
+	console.log(${1})
+
+snippet f
+	(ReactDom.findDOMNode(this.refs.${1}) as HTMLInputElement).value
+
+snippet fc
+	import * as React from 'react'
+	import * as ReactDom from 'react-dom'
+	import "./${1}.sass"
+	
+	interface Props {
+		
+	}
+	
+	export default function (props){
+		return <${2}>{props.children}</$2>
+	}
+	
+
+snippet gr
+	import {MultipleQuery} from "./Model/GraphQL";
+	import {${1}}      from "./Model/GraphQL/Queries";
+
+snippet gc
+	new MultipleQuery((e) => {
+		} , new ${1}(
+			{} ,
+			["all"],
+			(${2}) => {
+				this.setState({$2})
+			}
+		)
+	)
 
 snippet ti
 	setTimeout(function(){
@@ -40,15 +147,8 @@ snippet ti
 	} , 1000)
 
 snippet in
-	var intervalId = setInterval(function(){
+	const intervalId = setInterval(function(){
 		
 		clearInterval(intervalId)
 	} , 1000)
 
-snippet create
-	setTimeout(function(){
-		page.evaluate(function() {
-			document.querySelector('form[action="/ac_admin/${1}/create/"]').submit();
-		});
-		page.render('capture/$1_list.png');
-	} , 1000)

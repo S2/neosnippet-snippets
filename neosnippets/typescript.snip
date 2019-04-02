@@ -59,10 +59,10 @@ snippet g
 	})
 
 snippet ge
-	let ${1} = document.getElementById("${2}")
+	const ${1} = document.getElementById("${2}")
 
 snippet cr
-	let ${1} = document.createElement("${2}")
+	const ${1} = document.createElement("${2}")
 
 snippet ae
 	${1}.addEventListener("click" , (e : Event)=>{})
@@ -91,9 +91,7 @@ snippet re
 		}
 		
 		render() {
-			return (
-				${2}
-			);
+			return ${2}
 		}
 	}
 
@@ -103,7 +101,7 @@ snippet ti
 	} , 1000)
 
 snippet in
-	let intervalId = setInterval(()=>{
+	const intervalId = setInterval(()=>{
 		
 		clearInterval(intervalId)
 	} , 1000)
@@ -112,14 +110,14 @@ snippet el
 	${1} : HTML${3}Element = <HTML$3Element>document.getElementById("${2}")
 
 snippet xhr
-	let url = ""
-	let xhr = new XMLHttpRequest();
+	const url = ""
+	const xhr = new XMLHttpRequest();
 	xhr.open("POST" , url , true)
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	let json = encodeURIComponent(this.getJSON());
+	const json = encodeURIComponent(this.getJSON());
 	xhr.addEventListener("readystatechange" , ()=>{
 		if (xhr.readyState === 4 && xhr.status === 200){
-			let result = JSON.parse(xhr.responseText);
+			const result = JSON.parse(xhr.responseText);
 		}
 	});
 	xhr.send('json=' + json);
@@ -163,4 +161,15 @@ snippet gc
 			}
 		)
 	)
+
+snippet ti
+	setTimeout(function(){
+		
+	} , 1000)
+
+snippet in
+	const intervalId = setInterval(function(){
+		
+		clearInterval(intervalId)
+	} , 1000)
 
