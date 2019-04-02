@@ -142,13 +142,27 @@ snippet gc
 	)
 
 snippet ti
-	setTimeout(function(){
+	setTimeout(()=>{
 		
 	} , 1000)
 
 snippet in
-	const intervalId = setInterval(function(){
+	const intervalId = setInterval(()=>{
 		
 		clearInterval(intervalId)
 	} , 1000)
+
+snippet fe
+	const url = "${1}" 
+	const body = "" 
+	fetch(url , {
+		method : "GET" , 
+		headers : {
+			'Content-Type' : 'application/json'
+		} , 
+		body : body , 
+	} ).then((response)=>{
+		return response.json()
+	} ).then((result)=>{
+	})
 
