@@ -162,17 +162,6 @@ snippet gc
 		)
 	)
 
-snippet ti
-	setTimeout(()=>{
-		
-	} , 1000)
-
-snippet in
-	const intervalId = setInterval(()=>{
-		
-		clearInterval(intervalId)
-	} , 1000)
-
 snippet fe
 	const url = "${1}" 
 	const body = "" 
@@ -186,4 +175,18 @@ snippet fe
 		return response.json()
 	} ).then((result)=>{
 	})
+
+snippet t
+	try{
+		
+	}catch(e){
+		alert(e)
+		throw(e)
+	}
+
+snippet dt
+	'%Y-%m-%d %H:%M:%S'
+
+snippet dts
+	strftime('%Y-%m-%d %H:%M:%S' , new Date())
 

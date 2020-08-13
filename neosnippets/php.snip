@@ -276,28 +276,17 @@ snippet session
 
 snippet d
 	var_dump(${1});
+	error_log(print_r($1 , true), 0);
 
 snippet pr
 	private function ${1}(){
 	}
 
 snippet pu
-	/**
-		<br>
-		
-		@method $1 
-		@param {} 
-	*/
 	public function ${1}(){
 	}
 
 snippet pt
-	/**
-		<br>
-		
-		@method ${1} 
-		@param {} 
-	*/
 	protected function $1(){
 	}
 
@@ -331,4 +320,23 @@ snippet i
 	if(${1}){
 		
 	}
+
+snippet t
+	try
+		
+	catch (Exception $e){
+		
+	}
+
+snippet eq
+	$this->assertEquals(${1} , ${2});
+
+snippet nn
+	$this->assertNotNull(${1});
+
+snippet at
+	$this->assertTrue(${1});
+
+snippet af
+	$this->assertFalse(${1});
 

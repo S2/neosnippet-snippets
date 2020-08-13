@@ -79,3 +79,18 @@ snippet j
 	INNER JOIN 
 		${1}s ON $1s.id = ${2}.$1_id
 
+snippet b
+	begin
+		${1}
+	rescue Exception => e
+		throw e
+	end
+
+snippet d
+	p ${1}
+
+snippet eq
+	expect(${1}).to eq(${2})
+
+snippet at
+	expect(${1}).to be true
