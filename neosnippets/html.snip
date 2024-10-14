@@ -462,22 +462,25 @@ snippet ti
 	} , 1000)
 
 snippet in
-	var intervalId = setInterval(function(){
+	const intervalId = setInterval(function(){
 		
 		clearInterval(intervalId)
 	} , 1000)
 
 snippet l
-	for( var i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
-		var row = $1[i];
+	for( let i = 0 , arrayLength = ${1}.length ; i < arrayLength ; i++){
+		const row = $1[i];
 	}
 
 snippet ge
-	var ${1} = document.getElementById("${2}")
+	const ${1} = document.getElementById("${2}")
 
 snippet cr
-	var ${1} = document.createElement("${2}")
+	const ${1} = document.createElement("${2}")
 
 snippet ae
-	${1}.addEventListener("click" , (e : Event)=>{})
+	${1}.addEventListener("click" , (e)=>{})
+
+snippet d
+	console.log(${1})
 
